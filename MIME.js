@@ -1,8 +1,8 @@
 /*
  * @Author: Hobai Riku 
  * @Date: 2017-11-20 15:22:56 
- * @Last Modified by:   Hobai Riku 
- * @Last Modified time: 2017-11-20 15:22:56 
+ * @Last Modified by: Hobai Riku
+ * @Last Modified time: 2017-11-20 17:27:38
  */
 var arr =[
     //{type:"css",mime: "text/css"},
@@ -15,7 +15,7 @@ var arr =[
    // {type:"json",mime: "application/json"},
    // {type:"pdf",mime: "application/pdf"},
     {type:"png",mime: "image/png"},
-    {type:"svg",mime: "image/svg+xml"},
+    {type:"svg",mime: "image/svg"},
     {type:"bm",mime: "image/bmp"},
     {type:"bmp",mime: "image/bmp"},
     {type:"gif",mime: "image/gif"},

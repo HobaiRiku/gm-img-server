@@ -22,6 +22,8 @@ http://127.0.0.1:4451/danny.jpg?h=100&w=100&o=!
 
 储存：  
 图片存放于`picture`文件夹,访问时文件夹以路径隔开如：  
-`http://127.0.0.1:4451/topfolder/subfolder01/picture.gif`
+`http://127.0.0.1:4451/topfolder/subfolder01/picture.gif`  
+支持格式：gif、ico、jpeg、jpg、png、bm、bmp、svg
+
 ## 四、示例
 ![示例动画](https://github.com/HobaiRiku/gm-img-server/blob/master/example.gif?raw=true)
