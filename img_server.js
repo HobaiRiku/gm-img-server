@@ -2,7 +2,7 @@
  * @Author: Hobai Riku 
  * @Date: 2017-11-20 15:22:47 
  * @Last Modified by: Hobai Riku
- * @Last Modified time: 2017-11-20 15:28:54
+ * @Last Modified time: 2017-11-20 17:16:01
  */
 
 var express = require("express");
@@ -49,14 +49,21 @@ app.get("*", function (req, res, next) {
         let heigth = req.query.h;
         let width = req.query.w;
         let option = req.query.o;
-        gm("./picture/" + req.path)
-            .resize(width, heigth, option)
-            .toBuffer(fileType, function (err, buffer) {
-                if (err) console.log(err);
-                res.writeHead(200, { 'Content-Type': fileMIME });
-                res.write(buffer, 'binary');
-                res.end();
-            })
+        let stream = gm("./picture/" + req.path)
+        .resize(width, heigth, option)
+        .stream(fileType);
+        res.set( 'content-type', fileMIME );
+        let responseData = [];
+        if (stream) {
+            stream.on( 'data', function( chunk ) {
+              responseData.push( chunk );
+            });
+            stream.on( 'end', function() {
+               var finalData = Buffer.concat( responseData );
+               res.write( finalData );
+               res.end();
+            });
+        }
     } catch (error) {
         console.error(error)
         next(error);
