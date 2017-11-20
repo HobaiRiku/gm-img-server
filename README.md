@@ -24,4 +24,4 @@ http://127.0.0.1:4451/danny.jpg?h=100&w=100&o=!
 图片存放于`picture`文件夹,访问时文件夹以路径隔开如：  
 `http://127.0.0.1:4451/topfolder/subfolder01/picture.gif`
 ## 四、示例
-![示例动画](https://img.hobairiku.site/img_server/example.gif)
+![示例动画](https://github.com/HobaiRiku/gm-img-server/blob/master/example.gif?raw=true)
