@@ -1,15 +1,17 @@
 {
-  "name": "img_server",
-  "version": "1.0.0",
-  "description": "img server",
+  "name": "node_img_server",
+  "version": "0.0.1",
+  "description": "node_img_server",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node app.js",
+    "start": "pm2 start app.js -o out.log -e error.log -l info.log --log-date-format='YYYY - MM - DD HH: mm Z ' --name img_server",
+    "stop": "pm2 stop img_server"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Hobai Riku",
+  "license": "MIT",
   "dependencies": {
-    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "gm": "^1.23.0"
   }

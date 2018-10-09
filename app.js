@@ -1,30 +1,33 @@
 /*
  * @Author: Hobai Riku 
  * @Date: 2017-11-20 15:22:47 
- * @Last Modified by: Hobai Riku
- * @Last Modified time: 2017-11-20 17:16:01
+ * @Last Modified by: HobaiRiku
+ * @Last Modified time: 2018-10-09 14:13:01
  */
 
-var express = require("express");
+var express = require('express');
 var app = express();
-var fs = require("fs");
-var gm = require("gm");
+var fs = require('fs');
+var gm = require('gm');
 
-const http = require("http");
+const http = require('http');
 const https = require('https');
 const privateKey = fs.readFileSync('./key/img.key');
 const certificate = fs.readFileSync('./key/img.pem');
-const credentials = { key: privateKey, cert: certificate };
+const credentials = {
+    key: privateKey,
+    cert: certificate
+};
 
 const httpsServer = https.createServer(credentials, app);
 const httpServer = http.createServer(app);
 let SSLPORT = 4450;
-let PORT = 4451
+let PORT = 4451;
 
-//load picture 
-app.get("*", function (req, res, next) {
+//load picture
+app.get('*', function (req, res, next) {
     try {
-        let fileName = req.path.split('/')[(req.path.split('/').length - 1)];
+        let fileName = req.path.split('/')[req.path.split('/').length - 1];
         let fileType = fileName.split('.')[1];
         let fileMIME = '';
         let MIME_arr = require('./MIME');
@@ -41,7 +44,7 @@ app.get("*", function (req, res, next) {
             if (i == MIME_arr.length - 1) return next();
         }
         try {
-            let file = fs.readFileSync("./picture" + req.path);
+            let file = fs.readFileSync('./picture' + req.path);
         } catch (error) {
             //file no exit , turn to next
             return next();
@@ -49,33 +52,32 @@ app.get("*", function (req, res, next) {
         let heigth = req.query.h;
         let width = req.query.w;
         let option = req.query.o;
-        let stream = gm("./picture/" + req.path)
-        .resize(width, heigth, option)
-        .stream(fileType);
-        res.set( 'content-type', fileMIME );
+        let stream = gm('./picture/' + req.path)
+            .resize(width, heigth, option)
+            .stream(fileType);
+        res.set('content-type', fileMIME);
         let responseData = [];
         if (stream) {
-            stream.on( 'data', function( chunk ) {
-              responseData.push( chunk );
+            stream.on('data', function (chunk) {
+                responseData.push(chunk);
             });
-            stream.on( 'end', function() {
-               var finalData = Buffer.concat( responseData );
-               res.write( finalData );
-               res.end();
+            stream.on('end', function () {
+                var finalData = Buffer.concat(responseData);
+                res.write(finalData);
+                res.end();
             });
         }
     } catch (error) {
-        console.error(error)
+        console.error(error);
         next(error);
     }
 });
 
 //other app
-app.use('/',function (req,res,next) {
-    //todo...
+app.use('/', function (req, res, next) {
+    // todo
     next();
 });
-
 
 //404 capture
 app.use((req, res, next) => {
@@ -92,14 +94,14 @@ app.use((err, req, res, next) => {
         message: err.message,
         status: err.status,
         stack: err.stack,
-        code: err.code ? err.code : 0
-    }
+        code: err.code ? err.code : 0,
+    };
 
     res.send(err_send);
 });
 httpsServer.listen(SSLPORT, function () {
     console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
 });
- httpServer.listen(PORT, function () {
+httpServer.listen(PORT, function () {
     console.log('HTTP Server is running on: https://localhost:%s', PORT);
-}); 
+});
